@@ -1,0 +1,43 @@
+﻿@page "/templates"
+
+
+@inject TemplateService TemplateService
+@rendermode InteractiveAuto
+
+<h3>Templates</h3>
+
+@if (TemplatesDTO == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TemplatesDTO)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Content</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<TemplateDTO>? TemplatesDTO;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TemplatesDTO = await TemplateService.All();
+    }
+}
