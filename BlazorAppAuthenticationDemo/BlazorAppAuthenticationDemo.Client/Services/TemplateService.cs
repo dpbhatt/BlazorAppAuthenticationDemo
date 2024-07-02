@@ -3,15 +3,15 @@ using System.Net.Http.Json;
 
 namespace BlazorAppAuthenticationDemo.Client.Services;
 
-public class TemplateService
+public class TemplateService(HttpClient httpClient)
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = httpClient;
 
     private readonly string[] _omitPaths = ["/Account/Login", "/Account/AccessDenied"];
-    public TemplateService(IHttpClientFactory factory)
-    {
-        _httpClient = factory.CreateClient("serverApi");
-    }
+    //public TemplateService(IHttpClientFactory factory)
+    //{
+    //    _httpClient = factory.CreateClient();
+    //}
 
     public async Task<List<TemplateDTO>?> All()
     {
