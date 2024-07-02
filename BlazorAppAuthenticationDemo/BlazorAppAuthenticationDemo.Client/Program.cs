@@ -11,9 +11,20 @@ builder.Services.AddSingleton<AuthenticationStateProvider, PersistentAuthenticat
 
 builder.Services.AddScoped<TemplateService>();
 
-builder.Services.AddScoped(http => new HttpClient
+//builder.Services.AddScoped(http => new HttpClient
+//{
+//    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
+//});
+
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.AddHttpContextAccessor();
+
+//builder.Services.AddScoped<IdentityCookieHandler>();
+builder.Services.AddHttpClient("serverApi", options =>
 {
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress),
-});
+    options.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+    //options.DefaultRequestHeaders.Add("Accept", "application/json");
+
+});//.AddHttpMessageHandler<IdentityCookieHandler>();
 
 await builder.Build().RunAsync();

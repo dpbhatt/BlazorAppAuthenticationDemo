@@ -2,7 +2,8 @@
 
 
 @inject TemplateService TemplateService
-@rendermode InteractiveAuto
+@* @rendermode @(new InteractiveAutoRenderMode(prerender: false)) *@
+@rendermode InteractiveWebAssembly
 
 <h3>Templates</h3>
 

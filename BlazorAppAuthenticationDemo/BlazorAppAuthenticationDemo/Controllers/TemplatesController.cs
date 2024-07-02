@@ -1,4 +1,5 @@
 ﻿using BlazorAppAuthenticationDemo.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorAppAuthenticationDemo.Controllers;
@@ -14,11 +15,23 @@ public class TemplatesController : ControllerBase
         ];
 
     [HttpGet("all")]
-    //[Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrators")]
     public async Task<ActionResult<List<TemplateDTO>>> All()
     {
-        await Task.CompletedTask;
+        return Ok(await Task.FromResult(_templates));
+    }
 
-        return Ok(_templates);
+    [HttpGet("GetById/{id:int}")]
+    [Authorize(Roles = "Users")]
+    public async Task<ActionResult<List<TemplateDTO>>> GetById(int id)
+    {
+        var data = _templates.Find(x => x.Id == id);
+        return Ok(await Task.FromResult(data));
+    }
+
+    [HttpGet("Anyone")]
+    public async Task<ActionResult<string>> Anyone()
+    {
+        return Ok(await Task.FromResult("Anyone can call this endpoint"));
     }
 }

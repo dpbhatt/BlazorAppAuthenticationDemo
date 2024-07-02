@@ -41,10 +41,19 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-builder.Services.AddScoped(http => new HttpClient
+//builder.Services.AddScoped(http => new HttpClient
+//{
+//    BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
+//});
+
+//builder.Services.AddHttpContextAccessor();
+//builder.Services.AddScoped<IdentityCookieHandler>();
+builder.Services.AddHttpClient("serverApi", options =>
 {
-    BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
-});
+    options.BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!);
+    //options.DefaultRequestHeaders.Add("Accept", "application/json");
+
+});//.AddHttpMessageHandler<IdentityCookieHandler>();
 
 var app = builder.Build();
 
