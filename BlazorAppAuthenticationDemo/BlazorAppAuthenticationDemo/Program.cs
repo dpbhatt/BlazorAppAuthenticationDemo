@@ -1,3 +1,4 @@
+using BlazorAppAuthenticationDemo.Client;
 using BlazorAppAuthenticationDemo.Client.Services;
 using BlazorAppAuthenticationDemo.Components;
 using BlazorAppAuthenticationDemo.Components.Account;
@@ -46,14 +47,17 @@ builder.Services.AddScoped(http => new HttpClient
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!)
 });
 
-//builder.Services.AddHttpContextAccessor();
-//builder.Services.AddScoped<IdentityCookieHandler>();
-//builder.Services.AddHttpClient("serverApi", options =>
-//{
-//    options.BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!);
-//    //options.DefaultRequestHeaders.Add("Accept", "application/json");
 
-//});//.AddHttpMessageHandler<IdentityCookieHandler>();
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IdentityCookieHandler>();
+builder.Services.AddHttpClient("serverApi", options =>
+{
+    options.BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!);
+    //options.DefaultRequestHeaders.Add("Accept", "application/json");
+
+}).AddHttpMessageHandler<IdentityCookieHandler>();
 
 var app = builder.Build();
 

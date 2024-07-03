@@ -1,9 +1,12 @@
 ﻿@page "/templates"
+@using Microsoft.AspNetCore.Authorization
 
+@attribute [Authorize(Roles="Administrators")]
 
 @inject TemplateService TemplateService
-@* @rendermode @(new InteractiveAutoRenderMode(prerender: false)) *@
-@rendermode InteractiveWebAssembly
+@rendermode @(new InteractiveAutoRenderMode(prerender: false))
+@attribute [StreamRendering(true)]
+
 
 <h3>Templates</h3>
 

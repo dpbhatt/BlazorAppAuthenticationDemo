@@ -19,12 +19,15 @@ builder.Services.AddScoped(http => new HttpClient
 //builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 //builder.Services.AddHttpContextAccessor();
 
-//builder.Services.AddScoped<IdentityCookieHandler>();
-////builder.Services.AddHttpClient("serverApi", options =>
-////{
-////    options.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-////    options.DefaultRequestHeaders.Add("Accept", "application/json");
 
-////});//.AddHttpMessageHandler<IdentityCookieHandler>();
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IdentityCookieHandler>();
+builder.Services.AddHttpClient("serverApi", options =>
+{
+    options.BaseAddress = new Uri("https://localhost:7083");
+    options.DefaultRequestHeaders.Add("Accept", "application/json");
+
+}).AddHttpMessageHandler<IdentityCookieHandler>();
 
 await builder.Build().RunAsync();
